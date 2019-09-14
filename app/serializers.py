@@ -5,4 +5,4 @@ from .models import Gifs
 class GifsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gifs
-        fields = ("nome", "caminho")
+        fields = ("title", "image") 

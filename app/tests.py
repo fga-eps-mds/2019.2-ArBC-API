@@ -12,9 +12,9 @@ class BaseViewTest(APITestCase):
     client = APIClient()
 
     @staticmethod
-    def create_gifs(nome="", caminho=""):
-        if nome != "" and caminho != "":
-            Gifs.objects.create(nome=nome, caminho="")
+    def create_gifs(title="", image=""):
+        if title != "" and image != "":
+            Gifs.objects.create(nome=title, caminho="")
 
     def setUp(self):
         #add test data

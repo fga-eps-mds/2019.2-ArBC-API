@@ -1,13 +1,13 @@
 from __future__ import unicode_literals
 from djongo import models
 
-# Create your models here.
+# Create your models here
+
 
 class Gifs(models.Model):
     # gif title
-    nome = models.CharField(max_length=255, null=False)
-    # name of artist
-    caminho = models.CharField(max_length=255, null=False)
+    title = models.CharField(max_length=255, null=False)
+    image = models.ImageField(upload_to='app/assets/')
 
-    def __str__(self):
-        return "{} - {}".format(self.nome, self.caminho)
+    def str(self):
+        return "{}".format(self.title)
