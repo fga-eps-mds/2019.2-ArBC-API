@@ -1,8 +1,15 @@
 from rest_framework import serializers
-from .models import Gifs
+from .models import Word
+from .models import Letter
 
 
-class GifsSerializer(serializers.ModelSerializer):
+class WordSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gifs
-        fields = ("title", "image") 
+        model = Word
+        fields = ("name", "image")
+
+
+class LetterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Letter
+        fields = ("name", "image")
