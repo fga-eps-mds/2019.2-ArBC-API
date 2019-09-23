@@ -17,19 +17,25 @@ class BaseViewTest(APITestCase):
     client = APIClient()
 
     @staticmethod
+    def random_rgb():
+        return random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+
+    @staticmethod
     def create_name(stringLength=10):
         name = string.ascii_lowercase
         return ''.join(random.choice(name) for i in range(stringLength))
 
     @staticmethod
     def create_image():
-        image = Image.new('RGBA', size=(50, 50), color=(155, 0, 0))
+        image = Image.new('RGBA', size=(50, 50), color=(random.randint(0, 255),
+                                                        random.randint(0, 255),
+                                                        random.randint(0, 255)))
         buffer_io = BytesIO()
         image.save(fp=buffer_io, format='GIF')
         content_file = ContentFile(buffer_io.getvalue())
-        name = string.ascii_lowercase
-        name = ''.join(random.choice(name) for i in range(10))
-        image_file = InMemoryUploadedFile(content_file, None, name + '.gif',
+        file_name = string.ascii_lowercase
+        file_name = ''.join(random.choice(file_name) for i in range(10))
+        image_file = InMemoryUploadedFile(content_file, None, file_name + '.gif',
                                           'test/assets', content_file.tell, None)
         return image_file
 
@@ -39,6 +45,7 @@ class BaseViewTest(APITestCase):
             word = Word()
             word.name = name
             word.image.save(image.name, image)
+            word.save()
             return word
 
     @staticmethod
@@ -47,6 +54,7 @@ class BaseViewTest(APITestCase):
             letter = Letter()
             letter.name = name
             letter.image.save(image.name, image)
+            letter.save()
             return letter
 
     def setUp(self):
