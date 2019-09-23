@@ -29,12 +29,12 @@ class BaseViewTest(APITestCase):
     @staticmethod
     def create_word(self, title="", image=None):
         if title != "" and image is not None:
-            Word.objects.create(title=title, image=None)
+            Word.objects.create(title=title, image=image)
 
     @staticmethod
     def create_letter(self, title="", image=None):
         if title != "" and image is not None:
-            Letter.objects.create(title=title, image=None)
+            Letter.objects.create(title=title, image=image)
 
     def setUp(self):
         # add test data
