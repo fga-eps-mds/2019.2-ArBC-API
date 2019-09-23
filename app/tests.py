@@ -27,14 +27,14 @@ class BaseViewTest(APITestCase):
         return ''.join(random.choice(name) for i in range(stringLength))
 
     @staticmethod
-    def create_word(self, title="", image=None):
-        if title != "" and image is not None:
-            Word.objects.create(title=title, image=image)
+    def create_word(self, name="", image=None):
+        if name != "" and image is not None:
+            Word.objects.create(name=name, image=image)
 
     @staticmethod
-    def create_letter(self, title="", image=None):
-        if title != "" and image is not None:
-            Letter.objects.create(title=title, image=image)
+    def create_letter(self, name="", image=None):
+        if name != "" and image is not None:
+            Letter.objects.create(name=name, image=image)
 
     def setUp(self):
         # add test data
