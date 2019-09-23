@@ -1,4 +1,7 @@
 from django.urls import reverse
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from io import BytesIO
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
 from .models import Word
@@ -6,7 +9,6 @@ from .models import Letter
 from .serializers import WordSerializer
 from .serializers import LetterSerializer
 from PIL import Image
-import tempfile
 import random
 import string
 
@@ -15,42 +17,57 @@ class BaseViewTest(APITestCase):
     client = APIClient()
 
     @staticmethod
-    def create_image():
-        image = Image.new('RGBA', size=(50, 50), color=(155, 0, 0))
-        file = tempfile.NamedTemporaryFile(suffix='.png')
-        image.save(file)
-        return image
-
-    @staticmethod
     def create_name(stringLength=10):
         name = string.ascii_lowercase
         return ''.join(random.choice(name) for i in range(stringLength))
 
     @staticmethod
+    def create_image():
+        image = Image.new('RGBA', size=(50, 50), color=(155, 0, 0))
+        buffer_io = BytesIO()
+        image.save(fp=buffer_io, format='GIF')
+        content_file = ContentFile(buffer_io.getvalue())
+        name = string.ascii_lowercase
+        name = ''.join(random.choice(name) for i in range(10))
+        image_file = InMemoryUploadedFile(content_file, None, name + '.gif',
+                                          'test/assets', content_file.tell, None)
+        return image_file
+
+    @staticmethod
     def create_word(self, name="", image=None):
         if name != "" and image is not None:
-            Word.objects.create(name=name, image=image)
+            word = Word()
+            word.name = name
+            word.image.save(image.name, image)
+            return word
 
     @staticmethod
     def create_letter(self, name="", image=None):
         if name != "" and image is not None:
-            Letter.objects.create(name=name, image=image)
+            letter = Letter()
+            letter.name = name
+            letter.image.save(image.name, image)
+            return letter
 
     def setUp(self):
+        super().setUp()
         # add test data
+        self.random_letter = self.create_letter(self.create_name(), self.create_image())
         self.create_letter(self.create_name(), self.create_image())
         self.create_letter(self.create_name(), self.create_image())
         self.create_letter(self.create_name(), self.create_image())
         self.create_letter(self.create_name(), self.create_image())
         self.create_letter(self.create_name(), self.create_image())
         self.create_letter(self.create_name(), self.create_image())
-        
+
+        self.random_word = self.create_word(self.create_name(), self.create_image())
         self.create_word(self.create_name(), self.create_image())
         self.create_word(self.create_name(), self.create_image())
         self.create_word(self.create_name(), self.create_image())
         self.create_word(self.create_name(), self.create_image())
         self.create_word(self.create_name(), self.create_image())
         self.create_word(self.create_name(), self.create_image())
+
 
 class GetAllLettersTest(BaseViewTest):
     def test_get_all_letters(self):
@@ -84,4 +101,3 @@ class GetAllWordsTest(BaseViewTest):
         serialized = WordSerializer(expected, many=True)
         self.assertEqual(response.data, serialized.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
