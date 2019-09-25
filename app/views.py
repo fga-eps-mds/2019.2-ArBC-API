@@ -19,3 +19,21 @@ class ListLetterView(generics.ListAPIView):
     """
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
+
+
+class RetrieveWordView(generics.RetrieveAPIView):
+    """
+    Provides a retrieve method handler
+    """
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
+    lookup_field = 'name'
+
+
+class RetrieveLetterView(generics.RetrieveAPIView):
+    """
+    Provides a retrieve method handler
+    """
+    queryset = Letter.objects.all()
+    serializer_class = LetterSerializer
+    lookup_field = 'name'

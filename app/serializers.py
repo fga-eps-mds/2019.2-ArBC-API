@@ -4,14 +4,21 @@ from .models import Letter
 
 
 class WordSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField('get_image_url')
+    image = serializers.ImageField(
+        max_length=None, use_url=True
+    )
 
     class Meta:
         model = Word
         fields = ("name", "image")
 
     def get_image_url(self, obj):
-        return obj.image.url
+        request = self.context.get('request')
+        image_url = obj.image.url
+        if request:
+            return request.build_absolute_uri(image_url)
+        else:
+            return image_url
 
 
 class LetterSerializer(serializers.ModelSerializer):
@@ -22,4 +29,9 @@ class LetterSerializer(serializers.ModelSerializer):
         fields = ("name", "image")
 
     def get_image_url(self, obj):
-        return obj.image.url
+        request = self.context.get('request')
+        image_url = obj.image.url
+        if request:
+            return request.build_absolute_uri(image_url)
+        else:
+            return image_url

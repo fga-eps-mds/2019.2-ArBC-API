@@ -83,10 +83,19 @@ class GetAllLettersTest(BaseViewTest):
             reverse("letter-all", kwargs={"version": "v1"})
         )
         # fetch the data from db
+        response_status = response.status_code
+        response = response.data
         expected = Letter.objects.all()
         serialized = LetterSerializer(expected, many=True)
-        self.assertEqual(response.data, serialized.data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        serialized = serialized.data
+        for i in range(len(serialized)):
+            resp = response[i]
+            serial = serialized[i]
+            self.assertEqual(resp['name'], serial['name'])
+            path = resp['image']
+            path = path[17:len(path)]  # removing the localhost and http prefix
+            self.assertEqual(path, serial['image'])
+        self.assertEqual(response_status, status.HTTP_200_OK)
 
 
 class GetAllWordsTest(BaseViewTest):
@@ -100,7 +109,70 @@ class GetAllWordsTest(BaseViewTest):
             reverse("word-all", kwargs={"version": "v1"})
         )
         # fetch the data from db
+        response_status = response.status_code
+        response = response.data
         expected = Word.objects.all()
-        serialized = WordSerializer(expected, many=True, )
-        self.assertEqual(response.data, serialized.data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        serialized = WordSerializer(expected, many=True)
+        serialized = serialized.data
+        for i in range(len(serialized)):
+            resp = response[i]
+            serial = serialized[i]
+            self.assertEqual(resp['name'], serial['name'])
+            path = resp['image']
+            path = path[17:len(path)]  # removing the localhost and http prefix
+            self.assertEqual(path, serial['image'])
+        self.assertEqual(response_status, status.HTTP_200_OK)
+
+
+class GetSingleLetterTest(BaseViewTest):
+    def setUp(self):
+        super().setUp()
+
+    def test_get_single_letters(self):
+        """
+        This test ensures that one of letter's gif added in the setUp method
+        exist when we make a GET request to the letter/pk endpoint
+        """
+        # hit the API endpoint
+        response = self.client.get(
+            reverse("letter-single", kwargs={'version': 'v1',
+                                             'name': self.random_letter.name})
+        )
+        # fetch the data from db
+        response_status = response.status_code
+        expected = Letter.objects.filter(name=self.random_letter.name)
+        serialized = LetterSerializer(expected, many=True)
+        serialized = serialized.data[0]
+        response = response.data
+        self.assertEqual(response['name'], serialized['name'])
+        path = response['image']
+        path = path[17:len(path)]  # removing the localhost and http prefix
+        self.assertEqual(path, serialized['image'])
+        self.assertEqual(response_status, status.HTTP_200_OK)
+
+
+class GetSingleWordTest(BaseViewTest):
+    def setUp(self):
+        super().setUp()
+
+    def test_get_single_words(self):
+        """
+        This test ensures that one of word's gif added in the setUp method
+        exist when we make a GET request to the letter/pk endpoint
+        """
+        # hit the API endpoint
+        response = self.client.get(
+            reverse("word-single", kwargs={'version': 'v1',
+                                           'name': self.random_word.name})
+        )
+        # fetch the data from db
+        response_status = response.status_code
+        expected = Word.objects.filter(name=self.random_word.name)
+        serialized = WordSerializer(expected, many=True)
+        serialized = serialized.data[0]
+        response = response.data
+        self.assertEqual(response['name'], serialized['name'])
+        path = response['image']
+        path = path[17:len(path)]  # removing the localhost and http prefix
+        self.assertEqual(path, serialized['image'])
+        self.assertEqual(response_status, status.HTTP_200_OK)
