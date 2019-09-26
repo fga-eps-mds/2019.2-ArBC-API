@@ -21,7 +21,7 @@ class ListLetterView(generics.ListAPIView):
     serializer_class = LetterSerializer
 
 
-class RetrieveWordView(generics.RetrieveAPIView):
+class RetrieveDestroyWordView(generics.RetrieveDestroyAPIView):
     """
     Provides a retrieve method handler
     """
@@ -30,7 +30,7 @@ class RetrieveWordView(generics.RetrieveAPIView):
     lookup_field = 'name'
 
 
-class RetrieveLetterView(generics.RetrieveAPIView):
+class RetrieveDestroyLetterView(generics.RetrieveDestroyAPIView):
     """
     Provides a retrieve method handler
     """

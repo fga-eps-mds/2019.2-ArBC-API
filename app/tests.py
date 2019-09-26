@@ -158,7 +158,7 @@ class GetSingleWordTest(BaseViewTest):
     def test_get_single_words(self):
         """
         This test ensures that one of word's gif added in the setUp method
-        exist when we make a GET request to the letter/pk endpoint
+        exist when we make a GET request to the word/pk endpoint
         """
         # hit the API endpoint
         response = self.client.get(
@@ -176,3 +176,37 @@ class GetSingleWordTest(BaseViewTest):
         path = path[17:len(path)]  # removing the localhost and http prefix
         self.assertEqual(path, serialized['image'])
         self.assertEqual(response_status, status.HTTP_200_OK)
+
+class DestroySingleLetterTest(BaseViewTest):
+    def setUp(self):
+        super().setUp()
+
+    def test_destroy_single_letters(self):
+        """
+        This test ensures that one of letter's gif added in the setUp method
+        can be delete to the letter/pk endpoint
+        """
+        # hit the API endpoint
+        response = self.client.delete(
+            reverse("letter-single", kwargs={'version': 'v1',
+                                             'name': self.random_letter.name})
+        )
+        # fetch the data from db
+        self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT)
+
+class DestroySingleWordTest(BaseViewTest):
+    def setUp(self):
+        super().setUp()
+
+    def test_destroy_single_words(self):    
+        """
+        This test ensures that one of word's gif added in the setUp method
+        can be delete to the word/pk endpoint
+        """
+        # hit the API endpoint
+        response = self.client.delete(
+            reverse("word-single", kwargs={'version': 'v1',
+                                           'name': self.random_word.name})
+        )
+        # fetch the data from db
+        self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT)
