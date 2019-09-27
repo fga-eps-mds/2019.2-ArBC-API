@@ -29,5 +29,8 @@ services:
     volumes:
       - postgres_data_local:/var/lib/postgresql/data
       - postgres_backup_local:/backups
+    environment:
+      - POSTGRES_USER:postgres
+      - POSTGRES_PASSWORD:postgres
     ##env_file:
       ##- ./.envs/.local/.postgres
