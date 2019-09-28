@@ -1,9 +1,7 @@
 from __future__ import unicode_literals
-from djongo import models
-
+from django.db import models
 
 # Create your models here
-
 
 class Word(models.Model):
     # gif title

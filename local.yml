@@ -1,0 +1,36 @@
+version: '3'
+
+volumes:
+  postgres_data_local: {}
+  postgres_backup_local: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: arbc_api_local_django
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    #env_file:
+     # - ./.envs/.local/.django
+     # - ./.envs/.local/.postgres
+    ports:
+      - "8000:8000"
+    command: /start.sh
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: arbc_api_production_postgres
+    volumes:
+      - postgres_data_local:/var/lib/postgresql/data
+      - postgres_backup_local:/backups
+    environment:
+      - POSTGRES_USER:postgres
+      - POSTGRES_PASSWORD:postgres
+    ##env_file:
+      ##- ./.envs/.local/.postgres
