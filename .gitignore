@@ -134,3 +134,6 @@ dmypy.json
 
 #IDE's
 .idea/
+
+#database
+data-db
