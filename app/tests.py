@@ -1,14 +1,16 @@
 from django.urls import reverse
 from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.uploadedfile import InMemoryUploadedFile, SimpleUploadedFile
 from io import BytesIO
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase, APIClient, APIRequestFactory
 from rest_framework.views import status
+from app.views import ListCreateLetterView, ListCreateWordView
 from .models import Word
 from .models import Letter
 from .serializers import WordSerializer
 from .serializers import LetterSerializer
 from PIL import Image
+import tempfile
 import random
 import string
 
@@ -53,6 +55,8 @@ class BaseViewTest(APITestCase):
             letter.save()
             return letter
 
+
+class BaseLetterViewTest(BaseViewTest):
     def setUp(self):
         # add test data
         self.random_letter = self.create_letter(self, self.create_name(), self.create_image())
@@ -63,6 +67,9 @@ class BaseViewTest(APITestCase):
         self.create_letter(self, self.create_name(), self.create_image())
         self.create_letter(self, self.create_name(), self.create_image())
 
+
+class BaseWordViewTest(BaseViewTest):
+    def setUp(self):
         self.random_word = self.create_word(self, self.create_name(), self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
@@ -72,7 +79,22 @@ class BaseViewTest(APITestCase):
         self.create_word(self, self.create_name(), self.create_image())
 
 
-class GetAllLettersTest(BaseViewTest):
+class BasePostViewTest(APITestCase):
+    @staticmethod
+    def create_file_image(size=(100, 100), image_mode='RGB', image_format='PNG'):
+        data = BytesIO()
+        Image.new(image_mode, size).save(data, image_format)
+        data.seek(0)
+        return data
+
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        image = self.create_file_image(image_format='GIF')
+        image_file = SimpleUploadedFile('front.png', image.getvalue())
+        self.form_data = {'name': BaseViewTest.create_name(), 'image': image_file}
+
+
+class GetAllLettersTest(BaseLetterViewTest):
     def test_get_all_letters(self):
         """
         This test ensures that all letter's gifs added in the setUp method
@@ -98,7 +120,7 @@ class GetAllLettersTest(BaseViewTest):
         self.assertEqual(response_status, status.HTTP_200_OK)
 
 
-class GetAllWordsTest(BaseViewTest):
+class GetAllWordsTest(BaseWordViewTest):
     def test_get_all_words(self):
         """
         This test ensures that all word's gifs added in the setUp method
@@ -124,7 +146,7 @@ class GetAllWordsTest(BaseViewTest):
         self.assertEqual(response_status, status.HTTP_200_OK)
 
 
-class GetSingleLetterTest(BaseViewTest):
+class GetSingleLetterTest(BaseLetterViewTest):
     def setUp(self):
         super().setUp()
 
@@ -151,7 +173,7 @@ class GetSingleLetterTest(BaseViewTest):
         self.assertEqual(response_status, status.HTTP_200_OK)
 
 
-class GetSingleWordTest(BaseViewTest):
+class GetSingleWordTest(BaseWordViewTest):
     def setUp(self):
         super().setUp()
 
@@ -177,7 +199,8 @@ class GetSingleWordTest(BaseViewTest):
         self.assertEqual(path, serialized['image'])
         self.assertEqual(response_status, status.HTTP_200_OK)
 
-class DestroySingleLetterTest(BaseViewTest):
+
+class DestroySingleLetterTest(BaseLetterViewTest):
     def setUp(self):
         super().setUp()
 
@@ -194,7 +217,8 @@ class DestroySingleLetterTest(BaseViewTest):
         # fetch the data from db
         self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT)
 
-class DestroySingleWordTest(BaseViewTest):
+
+class DestroySingleWordTest(BaseWordViewTest):
     def setUp(self):
         super().setUp()
 
@@ -210,3 +234,23 @@ class DestroySingleWordTest(BaseViewTest):
         )
         # fetch the data from db
         self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT)
+
+
+class PostNewLetterTest(BasePostViewTest):
+    def test_post_single_letters(self):
+        request = self.factory.post(
+            reverse("letter-all", kwargs={'version': 'v1'}),
+            self.form_data, format='multipart'
+        )
+        response = ListCreateLetterView.as_view()(request)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class PostNewWordTest(BasePostViewTest):
+    def test_post_single_letters(self):
+        request = self.factory.post(
+            reverse("word-all", kwargs={'version': 'v1'}),
+            self.form_data, format='multipart'
+        )
+        response = ListCreateWordView.as_view()(request)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

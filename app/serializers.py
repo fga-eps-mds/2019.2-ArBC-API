@@ -12,26 +12,12 @@ class WordSerializer(serializers.ModelSerializer):
         model = Word
         fields = ("name", "image")
 
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        image_url = obj.image.url
-        if request:
-            return request.build_absolute_uri(image_url)
-        else:
-            return image_url
-
 
 class LetterSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField('get_image_url')
+    image = serializers.ImageField(
+        max_length=None, use_url=True
+    )
 
     class Meta:
         model = Letter
         fields = ("name", "image")
-
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        image_url = obj.image.url
-        if request:
-            return request.build_absolute_uri(image_url)
-        else:
-            return image_url
