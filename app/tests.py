@@ -153,7 +153,7 @@ class GetSingleLetterTest(BaseLetterViewTest):
     def test_get_single_letters(self):
         """
         This test ensures that one of letter's gif added in the setUp method
-        exist when we make a GET request to the letter/pk endpoint
+        exist when we make a GET request to the letter/name endpoint
         """
         # hit the API endpoint
         response = self.client.get(
@@ -180,7 +180,7 @@ class GetSingleWordTest(BaseWordViewTest):
     def test_get_single_words(self):
         """
         This test ensures that one of word's gif added in the setUp method
-        exist when we make a GET request to the word/pk endpoint
+        exist when we make a GET request to the word/name endpoint
         """
         # hit the API endpoint
         response = self.client.get(
@@ -207,15 +207,14 @@ class DestroySingleLetterTest(BaseLetterViewTest):
     def test_destroy_single_letters(self):
         """
         This test ensures that one of letter's gif added in the setUp method
-        can be delete to the letter/pk endpoint
+        can be delete to the letter/name endpoint
         """
         # hit the API endpoint
         response = self.client.delete(
             reverse("letter-single", kwargs={'version': 'v1',
                                              'name': self.random_letter.name})
         )
-        # fetch the data from db
-        self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class DestroySingleWordTest(BaseWordViewTest):
@@ -225,15 +224,14 @@ class DestroySingleWordTest(BaseWordViewTest):
     def test_destroy_single_words(self):    
         """
         This test ensures that one of word's gif added in the setUp method
-        can be delete to the word/pk endpoint
+        can be delete to the word/name endpoint
         """
         # hit the API endpoint
         response = self.client.delete(
             reverse("word-single", kwargs={'version': 'v1',
                                            'name': self.random_word.name})
         )
-        # fetch the data from db
-        self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class PostNewLetterTest(BasePostViewTest):
@@ -247,10 +245,58 @@ class PostNewLetterTest(BasePostViewTest):
 
 
 class PostNewWordTest(BasePostViewTest):
-    def test_post_single_letters(self):
+    def test_post_single_words(self):
         request = self.factory.post(
             reverse("word-all", kwargs={'version': 'v1'}),
             self.form_data, format='multipart'
         )
         response = ListCreateWordView.as_view()(request)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class UpdateSingleWordTest(BaseWordViewTest):
+    def setUp(self):
+        super().setUp()
+
+    def test_update_single_word(self):
+        """
+        This test ensures that one of word's gif added in the setUp method
+        can be updated to the word/name endpoint
+        """
+        # hit the API endpoint
+        image = BasePostViewTest.create_file_image(image_format='GIF')
+        image_file = SimpleUploadedFile('fotinha.png', image.getvalue())
+        data = {'name': 'djikstra', 'image': image_file}
+        response = self.client.put(
+            reverse("word-single", kwargs={'version': 'v1',
+                                           'name': self.random_word.name}),
+            data, format='multipart'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        expected = Word.objects.filter(name='djikstra')
+        serial = WordSerializer(expected, many=True)
+        self.assertEqual(serial.data[0]['name'], data['name'])
+
+
+class UpdateSingleLetterTest(BaseLetterViewTest):
+    def setUp(self):
+        super().setUp()
+
+    def test_update_single_letter(self):
+        """
+        This test ensures that one of letters's gif added in the setUp method
+        can be updated to the letter/name endpoint
+        """
+        # hit the API endpoint
+        image = BasePostViewTest.create_file_image(image_format='GIF')
+        image_file = SimpleUploadedFile('fotinha.png', image.getvalue())
+        data = {'name': 'frobenius', 'image': image_file}
+        response = self.client.put(
+            reverse("letter-single", kwargs={'version': 'v1',
+                                             'name': self.random_letter.name}),
+            data, format='multipart'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        expected = Letter.objects.filter(name='frobenius')
+        serial = LetterSerializer(expected, many=True)
+        self.assertEqual(serial.data[0]['name'], data['name'])
