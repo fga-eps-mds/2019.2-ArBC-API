@@ -7,7 +7,7 @@ from .serializers import LetterSerializer
 
 class ListCreateWordView(generics.ListCreateAPIView):
     """
-    Provides a lits method handler.
+    Provides a list method handler.
     """
     queryset = Word.objects.all()
     serializer_class = WordSerializer
