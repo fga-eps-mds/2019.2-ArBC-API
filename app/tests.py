@@ -1,6 +1,7 @@
 from django.urls import reverse
 from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile, SimpleUploadedFile
+from django.core.files.uploadedfile import InMemoryUploadedFile, \
+    SimpleUploadedFile
 from io import BytesIO
 from rest_framework.test import APITestCase, APIClient, APIRequestFactory
 from rest_framework.views import status
@@ -10,7 +11,6 @@ from .models import Letter
 from .serializers import WordSerializer
 from .serializers import LetterSerializer
 from PIL import Image
-import tempfile
 import random
 import string
 
@@ -25,15 +25,17 @@ class BaseViewTest(APITestCase):
 
     @staticmethod
     def create_image():
-        image = Image.new('RGBA', size=(50, 50), color=(random.randint(0, 255),
-                                                        random.randint(0, 255),
-                                                        random.randint(0, 255)))
+        image = Image.new('RGBA', size=(50, 50),
+                          color=(random.randint(0, 255),
+                                 random.randint(0, 255),
+                                 random.randint(0, 255)))
         buffer_io = BytesIO()
         image.save(fp=buffer_io, format='GIF')
         content_file = ContentFile(buffer_io.getvalue())
         file_name = string.ascii_lowercase
         file_name = ''.join(random.choice(file_name) for i in range(10))
-        image_file = InMemoryUploadedFile(content_file, None, file_name + '.gif',
+        image_file = InMemoryUploadedFile(content_file, None,
+                                          file_name + '.gif',
                                           'image/gif', content_file.tell, None)
         return image_file
 
@@ -59,7 +61,8 @@ class BaseViewTest(APITestCase):
 class BaseLetterViewTest(BaseViewTest):
     def setUp(self):
         # add test data
-        self.random_letter = self.create_letter(self, self.create_name(), self.create_image())
+        self.random_letter = self.create_letter(self, self.create_name(),
+                                                self.create_image())
         self.create_letter(self, self.create_name(), self.create_image())
         self.create_letter(self, self.create_name(), self.create_image())
         self.create_letter(self, self.create_name(), self.create_image())
@@ -70,7 +73,8 @@ class BaseLetterViewTest(BaseViewTest):
 
 class BaseWordViewTest(BaseViewTest):
     def setUp(self):
-        self.random_word = self.create_word(self, self.create_name(), self.create_image())
+        self.random_word = self.create_word(self, self.create_name(),
+                                            self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
@@ -81,7 +85,8 @@ class BaseWordViewTest(BaseViewTest):
 
 class BasePostViewTest(APITestCase):
     @staticmethod
-    def create_file_image(size=(100, 100), image_mode='RGB', image_format='PNG'):
+    def create_file_image(size=(100, 100),
+                          image_mode='RGB', image_format='PNG'):
         data = BytesIO()
         Image.new(image_mode, size).save(data, image_format)
         data.seek(0)
@@ -91,7 +96,8 @@ class BasePostViewTest(APITestCase):
         self.factory = APIRequestFactory()
         image = self.create_file_image(image_format='GIF')
         image_file = SimpleUploadedFile('front.png', image.getvalue())
-        self.form_data = {'name': BaseViewTest.create_name(), 'image': image_file}
+        self.form_data = {'name': BaseViewTest.create_name(),
+                          'image': image_file}
 
 
 class GetAllLettersTest(BaseLetterViewTest):
@@ -221,7 +227,7 @@ class DestroySingleWordTest(BaseWordViewTest):
     def setUp(self):
         super().setUp()
 
-    def test_destroy_single_words(self):    
+    def test_destroy_single_words(self):
         """
         This test ensures that one of word's gif added in the setUp method
         can be delete to the word/name endpoint
@@ -292,8 +298,9 @@ class UpdateSingleLetterTest(BaseLetterViewTest):
         image_file = SimpleUploadedFile('fotinha.png', image.getvalue())
         data = {'name': 'frobenius', 'image': image_file}
         response = self.client.put(
-            reverse("letter-single", kwargs={'version': 'v1',
-                                             'name': self.random_letter.name}),
+            reverse("letter-single",
+                    kwargs={'version': 'v1',
+                            'name': self.random_letter.name}),
             data, format='multipart'
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
