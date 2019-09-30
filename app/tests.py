@@ -17,11 +17,12 @@ class BaseViewTest(APITestCase):
             Word.objects.create(title=title, image="")
 
     def setUp(self):
-        #add test data
+        # add test data
         self.create_word("#125ZH8966", "CJ")
         self.create_word("#771YXD898", "Baiano")
         self.create_word("#Y25HH8969", "Konca")
         self.create_word("#LLLPO8910", "Biruleibe")
+
 
 class GetAllGifsTest(BaseViewTest):
     def test_get_all_gifs(self):
@@ -29,7 +30,7 @@ class GetAllGifsTest(BaseViewTest):
         This test ensures that all gifs added in the setUp method
         exist when we make a GET request to the gifs/ endpoint
         """
-        #hit the API endpoint
+        # hit the API endpoint
         response = self.client.get(
             reverse("word-all", kwargs={"version": "v1"})
         )

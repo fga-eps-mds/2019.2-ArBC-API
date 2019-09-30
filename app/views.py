@@ -4,6 +4,7 @@ from .models import Letter
 from .serializers import WordSerializer
 from .serializers import LetterSerializer
 
+
 class ListWordView(generics.ListAPIView):
     """
     Provides a get method handler.

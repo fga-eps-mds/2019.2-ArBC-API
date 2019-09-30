@@ -24,6 +24,7 @@ test:
     - docker-compose -f local.yml build
     #- docker-compose -f local.yml run --rm django python3 manage.py makemigrations
     #- docker-compose -f local.yml run --rm django python3 manage.py migrate
+    - rm ./app/migrations/*
     - docker-compose -f local.yml run --rm django flake8 #liting
     - docker-compose -f local.yml run --rm django py.test #unit test
 
