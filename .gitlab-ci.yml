@@ -11,8 +11,8 @@ services:
   - postgres:latest
 
 stages:
-  - test
   - build
+  - test
   - deploy
 
 build:
