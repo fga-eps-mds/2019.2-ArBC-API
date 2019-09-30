@@ -1,13 +1,14 @@
 # This file is a template, and might need editing before it works on your project.
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/python
-image: python:latest
+# image: python:latest
+image: docker
 
 # Pick zero or more services to be used on all builds.
 # Only needed when using a docker container to run your tests in.
 # Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-a-service
 services:
-  - docker
+  - docker:dind
   - postgres:latest
 
 stages:
@@ -18,23 +19,14 @@ stages:
 build:
   stage: build
   script:
-    - sudo apt-get remove docker docker-engine docker.io
-    - sudo apt-get update
-    - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
-    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    - sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-    - sudo chmod +x /usr/local/bin/docker-compose
-    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-    - sudo apt-get update
-    - sudo apt-get install docker-ce
-    - docker-compose version
-    - docker version
-    - python3 -m pip install pip -U
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
+    - docker-compose -f local.yml build
 
 test:
   stage: test
   script:
-    - docker-compose -f local.yml run --rm django flake8
-    - docker-compose -f local.yml run --rm django py.test
-    - docker-compose -f local.yml run --rm django python3 manage.py makemigrations
-    - docker-compose -f local.yml up --build -d
+  #  - docker-compose -f local.yml run --rm django flake8
+  #  - docker-compose -f local.yml run --rm django py.test
+  #  - docker-compose -f local.yml run --rm django python3 manage.py makemigrations
+  # - docker-compose -f local.yml up --build -d
