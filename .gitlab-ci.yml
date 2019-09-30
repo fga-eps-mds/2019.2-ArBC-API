@@ -10,7 +10,7 @@ services:
   - docker
   - postgres:latest
 
-before_install:
+script:
   - sudo apt-get remove docker docker-engine docker.io
   - sudo apt-get update
   - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
@@ -23,8 +23,6 @@ before_install:
   - docker-compose version
   - docker version
   - python3 -m pip install pip -U
-
-script:
   - docker-compose -f local.yml run --rm django flake8
   - docker-compose -f local.yml run --rm django py.test
   - docker-compose -f local.yml run --rm django coverage run -m py.test
