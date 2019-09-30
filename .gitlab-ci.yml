@@ -38,5 +38,3 @@ test:
     - docker-compose -f local.yml run --rm django py.test
     - docker-compose -f local.yml run --rm django python3 manage.py makemigrations
     - docker-compose -f local.yml up --build -d
-  dependencies:
-    - build
