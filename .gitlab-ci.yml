@@ -10,22 +10,33 @@ services:
   - docker
   - postgres:latest
 
-script:
-  - sudo apt-get remove docker docker-engine docker.io
-  - sudo apt-get update
-  - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-  - sudo chmod +x /usr/local/bin/docker-compose
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get install docker-ce
-  - docker-compose version
-  - docker version
-  - python3 -m pip install pip -U
-  - docker-compose -f local.yml run --rm django flake8
-  - docker-compose -f local.yml run --rm django py.test
-  - docker-compose -f local.yml run --rm django coverage run -m py.test
-  - docker-compose -f local.yml run --rm django coverage xml
-  - docker-compose -f local.yml run --rm django python3 manage.py makemigrations
-  - docker-compose -f local.yml up --build -d
+stages:
+  - test
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - sudo apt-get remove docker docker-engine docker.io
+    - sudo apt-get update
+    - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+    - sudo chmod +x /usr/local/bin/docker-compose
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    - sudo apt-get update
+    - sudo apt-get install docker-ce
+    - docker-compose version
+    - docker version
+    - python3 -m pip install pip -U
+
+test:
+  stage: test
+  script:
+    - docker-compose -f local.yml run --rm django flake8
+    - docker-compose -f local.yml run --rm django py.test
+    - docker-compose -f local.yml run --rm django python3 manage.py makemigrations
+    - docker-compose -f local.yml up --build -d
+  dependencies:
+    - build
