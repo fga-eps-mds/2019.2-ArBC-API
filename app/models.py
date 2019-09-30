@@ -3,10 +3,11 @@ from django.db import models
 
 # Create your models here
 
+
 class Word(models.Model):
     # gif title
     name = models.CharField(max_length=255, null=False)
-    image = models.ImageField(upload_to='app/assets/word/')
+    image = models.ImageField(upload_to='word/')
 
     def str(self):
         return "{}".format(self.name)
@@ -15,7 +16,7 @@ class Word(models.Model):
 class Letter(models.Model):
     # gif title
     name = models.CharField(max_length=255, null=False)
-    image = models.ImageField(upload_to='app/assets/letter/')
+    image = models.ImageField(upload_to='letter/')
 
     def str(self):
         return "{}".format(self.name)
