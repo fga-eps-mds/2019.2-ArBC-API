@@ -5,17 +5,35 @@ from .serializers import WordSerializer
 from .serializers import LetterSerializer
 
 
-class ListWordView(generics.ListAPIView):
+class ListCreateWordView(generics.ListCreateAPIView):
     """
-    Provides a get method handler.
+    Provides a list method handler.
     """
     queryset = Word.objects.all()
     serializer_class = WordSerializer
 
 
-class ListLetterView(generics.ListAPIView):
+class ListCreateLetterView(generics.ListCreateAPIView):
     """
-    Provides a get method handler.
+    Provides a list create method handler.
     """
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
+
+
+class RetrieveUpdateDestroyWordView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Provides a retrieve update destroy method handler.
+    """
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
+    lookup_field = 'name'
+
+
+class RetrieveUpdateDestroyLetterView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Provides a retrieve update destroy method handler.
+    """
+    queryset = Letter.objects.all()
+    serializer_class = LetterSerializer
+    lookup_field = 'name'
