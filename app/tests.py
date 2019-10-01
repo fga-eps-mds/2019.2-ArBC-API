@@ -102,10 +102,10 @@ class BasePostViewTest(APITestCase):
 
 """ class GetAllLettersTest(BaseLetterViewTest):
     def test_get_all_letters(self):
-        
+
         This test ensures that all letter's gifs added in the setUp method
         exist when we make a GET request to the letter/ endpoint
-        
+
         # hit the API endpoint
         response = self.client.get(
             reverse("letter-all", kwargs={"version": "v1"})
@@ -150,6 +150,7 @@ class BasePostViewTest(APITestCase):
             self.assertEqual(path, serial['image'])
         self.assertEqual(response_status, status.HTTP_200_OK)
  """
+
 
 class GetSingleLetterTest(BaseLetterViewTest):
     def setUp(self):
