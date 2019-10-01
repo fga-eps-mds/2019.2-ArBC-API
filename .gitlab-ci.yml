@@ -21,7 +21,7 @@ test:
   script:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
-    - pip install postgres
+    #- pip install postgres
     - docker-compose -f local.yml build
     #- docker-compose -f local.yml up
     - docker-compose -f local.yml run --rm django python3 manage.py makemigrations
