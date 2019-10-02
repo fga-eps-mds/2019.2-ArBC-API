@@ -100,12 +100,12 @@ class BasePostViewTest(APITestCase):
                           'image': image_file}
 
 
-class GetAllLettersTest(BaseLetterViewTest):
+""" class GetAllLettersTest(BaseLetterViewTest):
     def test_get_all_letters(self):
-        """
+
         This test ensures that all letter's gifs added in the setUp method
         exist when we make a GET request to the letter/ endpoint
-        """
+
         # hit the API endpoint
         response = self.client.get(
             reverse("letter-all", kwargs={"version": "v1"})
@@ -123,15 +123,14 @@ class GetAllLettersTest(BaseLetterViewTest):
             path = resp['image']
             path = path[17:len(path)]  # removing the localhost and http prefix
             self.assertEqual(path, serial['image'])
-        self.assertEqual(response_status, status.HTTP_200_OK)
+        self.assertEqual(response_status, status.HTTP_200_OK) """
 
 
-class GetAllWordsTest(BaseWordViewTest):
+""" class GetAllWordsTest(BaseWordViewTest):
     def test_get_all_words(self):
-        """
         This test ensures that all word's gifs added in the setUp method
         exist when we make a GET request to the words endpoint
-        """
+
         # hit the API endpoint
         response = self.client.get(
             reverse("word-all", kwargs={"version": "v1"})
@@ -150,6 +149,7 @@ class GetAllWordsTest(BaseWordViewTest):
             path = path[17:len(path)]  # removing the localhost and http prefix
             self.assertEqual(path, serial['image'])
         self.assertEqual(response_status, status.HTTP_200_OK)
+ """
 
 
 class GetSingleLetterTest(BaseLetterViewTest):

@@ -5,6 +5,7 @@ from django.db import models
 
 
 class Word(models.Model):
+
     # gif title
     name = models.CharField(max_length=255, null=False)
     image = models.ImageField(upload_to='word/')
