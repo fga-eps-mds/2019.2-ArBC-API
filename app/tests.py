@@ -114,8 +114,8 @@ class GetAllLettersTest(BaseLetterViewTest):
         response_status = response.status_code
         self.assertEqual(response_status, status.HTTP_200_OK)
         response = response.data
-        expected = Word.objects.all()
-        serialized = WordSerializer(expected, many=True)
+        expected = Letter.objects.all()
+        serialized = LetterSerializer(expected, many=True)
         serialized = serialized.data
         response = response['results']
         for i in range(len(serialized)):
