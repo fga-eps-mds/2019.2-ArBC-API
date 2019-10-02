@@ -33,8 +33,7 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     when corresponding Word object is deleted.
     """
     if instance.image:
-        if os.path.isfile(instance.image.path):
-            os.remove(instance.image.path)
+        instance.image.delete(False)
 
 
 @receiver(models.signals.post_delete, sender=Letter)
@@ -44,8 +43,7 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     when corresponding Letter object is deleted.
     """
     if instance.image:
-        if os.path.isfile(instance.image.path):
-            os.remove(instance.image.path)
+        instance.image.delete(False)
 
 
 @receiver(models.signals.pre_save, sender=Word)
@@ -65,8 +63,7 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
 
     new_file = instance.image
     if not old_file == new_file:
-        if os.path.isfile(old_file.path):
-            os.remove(old_file.path)
+        old_file.delete(False)
 
 
 @receiver(models.signals.pre_save, sender=Letter)
@@ -86,5 +83,4 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
 
     new_file = instance.image
     if not old_file == new_file:
-        if os.path.isfile(old_file.path):
-            os.remove(old_file.path)
+        old_file.delete(False)
