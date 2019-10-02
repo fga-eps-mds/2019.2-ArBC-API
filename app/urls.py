@@ -14,4 +14,4 @@ urlpatterns = [
          name="word-single"),
     path('Letter/<name>', RetrieveUpdateDestroyLetterView.as_view(),
          name="letter-single"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
