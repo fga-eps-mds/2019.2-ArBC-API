@@ -105,6 +105,10 @@ class BasePostViewTest(APITestCase):
         self.form_data = {'name': BaseViewTest.create_name(),
                           'image': image_file}
 
+    def tearDown(self):
+        Word.objects.all().delete()
+        Letter.objects.all().delete()
+
 
 class GetAllLettersTest(BaseLetterViewTest):
     def test_get_all_letters(self):
