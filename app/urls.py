@@ -1,6 +1,4 @@
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
 from .views import ListCreateWordView
 from .views import ListCreateLetterView
 from .views import RetrieveUpdateDestroyLetterView
@@ -14,4 +12,4 @@ urlpatterns = [
          name="word-single"),
     path('Letter/<name>', RetrieveUpdateDestroyLetterView.as_view(),
          name="letter-single"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
