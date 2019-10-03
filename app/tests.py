@@ -70,6 +70,9 @@ class BaseLetterViewTest(BaseViewTest):
         self.create_letter(self, self.create_name(), self.create_image())
         self.create_letter(self, self.create_name(), self.create_image())
 
+    def tearDown(self):
+        Letter.objects.all().delete()
+
 
 class BaseWordViewTest(BaseViewTest):
     def setUp(self):
@@ -81,6 +84,9 @@ class BaseWordViewTest(BaseViewTest):
         self.create_word(self, self.create_name(), self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
+
+    def tearDown(self):
+        Word.objects.all().delete()
 
 
 class BasePostViewTest(APITestCase):
@@ -99,6 +105,10 @@ class BasePostViewTest(APITestCase):
         self.form_data = {'name': BaseViewTest.create_name(),
                           'image': image_file}
 
+    def tearDown(self):
+        Word.objects.all().delete()
+        Letter.objects.all().delete()
+
 
 class GetAllLettersTest(BaseLetterViewTest):
     def test_get_all_letters(self):
@@ -112,10 +122,12 @@ class GetAllLettersTest(BaseLetterViewTest):
         )
         # fetch the data from db
         response_status = response.status_code
+        self.assertEqual(response_status, status.HTTP_200_OK)
         response = response.data
         expected = Letter.objects.all()
         serialized = LetterSerializer(expected, many=True)
         serialized = serialized.data
+        response = response['results']
         for i in range(len(serialized)):
             resp = response[i]
             serial = serialized[i]
@@ -123,7 +135,6 @@ class GetAllLettersTest(BaseLetterViewTest):
             path = resp['image']
             path = path[17:len(path)]  # removing the localhost and http prefix
             self.assertEqual(path, serial['image'])
-        self.assertEqual(response_status, status.HTTP_200_OK)
 
 
 class GetAllWordsTest(BaseWordViewTest):
@@ -138,10 +149,12 @@ class GetAllWordsTest(BaseWordViewTest):
         )
         # fetch the data from db
         response_status = response.status_code
+        self.assertEqual(response_status, status.HTTP_200_OK)
         response = response.data
         expected = Word.objects.all()
         serialized = WordSerializer(expected, many=True)
         serialized = serialized.data
+        response = response['results']
         for i in range(len(serialized)):
             resp = response[i]
             serial = serialized[i]
@@ -149,7 +162,6 @@ class GetAllWordsTest(BaseWordViewTest):
             path = resp['image']
             path = path[17:len(path)]  # removing the localhost and http prefix
             self.assertEqual(path, serial['image'])
-        self.assertEqual(response_status, status.HTTP_200_OK)
 
 
 class GetSingleLetterTest(BaseLetterViewTest):
