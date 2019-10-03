@@ -37,8 +37,7 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
 
 
 @receiver(models.signals.pre_save, sender=Word)
-@receiver(models.signals.pre_save, sender=Letter)
-def auto_delete_file_on_change(sender, instance, **kwargs):
+def auto_delete_word_image_on_change(sender, instance, **kwargs):
     """
     Deletes old file from filesystem
     when corresponding Word object is updated
@@ -50,6 +49,26 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
     try:
         old_file = Word.objects.get(pk=instance.pk).image
     except Word.DoesNotExist:
+        return False
+
+    new_file = instance.image
+    if not old_file == new_file:
+        old_file.delete(False)
+
+
+@receiver(models.signals.pre_save, sender=Letter)
+def auto_delete_letter_image_on_change(sender, instance, **kwargs):
+    """
+    Deletes old file from filesystem
+    when corresponding Word object is updated
+    with new file.
+    """
+    if not instance.pk:
+        return False
+
+    try:
+        old_file = Letter.objects.get(pk=instance.pk).image
+    except Letter.DoesNotExist:
         return False
 
     new_file = instance.image
