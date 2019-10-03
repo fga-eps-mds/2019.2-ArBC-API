@@ -70,6 +70,9 @@ class BaseLetterViewTest(BaseViewTest):
         self.create_letter(self, self.create_name(), self.create_image())
         self.create_letter(self, self.create_name(), self.create_image())
 
+    def tearDown(self):
+        Letter.objects.all().delete()
+
 
 class BaseWordViewTest(BaseViewTest):
     def setUp(self):
@@ -81,6 +84,9 @@ class BaseWordViewTest(BaseViewTest):
         self.create_word(self, self.create_name(), self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
         self.create_word(self, self.create_name(), self.create_image())
+
+    def tearDown(self):
+        Word.objects.all().delete()
 
 
 class BasePostViewTest(APITestCase):
@@ -98,6 +104,10 @@ class BasePostViewTest(APITestCase):
         image_file = SimpleUploadedFile('front.png', image.getvalue())
         self.form_data = {'name': BaseViewTest.create_name(),
                           'image': image_file}
+
+    def tearDown(self):
+        Word.objects.all().delete()
+        Letter.objects.all().delete()
 
 
 class GetAllLettersTest(BaseLetterViewTest):
