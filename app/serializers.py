@@ -9,6 +9,7 @@ class WordSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
+        ordering = ['-id']
         model = Word
         fields = ("name", "image")
 
@@ -19,5 +20,6 @@ class LetterSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
+        ordering = ['-id']
         model = Letter
         fields = ("name", "image")
