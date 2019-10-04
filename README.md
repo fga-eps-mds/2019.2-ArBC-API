@@ -17,6 +17,10 @@ sudo docker-compose -f local.yml run --rm django python3 manage.py migrate
 
 sudo docker-compose -f local.yml run --rm django python3 manage.py createsuperuser
 
+## Gerar seedings
+
+sudo docker-compose -f local.yml run --rm django python3 seed.py
+
 ## Testar o linting
 
 sudo docker-compose -f local.yml run --rm django flake8
