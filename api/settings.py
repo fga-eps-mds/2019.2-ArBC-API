@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'app',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -132,3 +134,7 @@ REST_FRAMEWORK = {
                                 + ".PageNumberPagination",
     'PAGE_SIZE': 10
 }
+
+CORS_ORIGIN_WHITELIST = [
+    'https://localhost:8080',
+]
