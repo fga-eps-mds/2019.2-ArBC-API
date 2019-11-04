@@ -1,1 +1,2 @@
-web: gunicorn api.wsgi --preload --workers 1
+release: python manage.py migrate
+web: gunicorn api.wsgi --preload --workers 
