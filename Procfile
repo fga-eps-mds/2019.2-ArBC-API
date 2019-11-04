@@ -1,2 +1,2 @@
-release: python manage.py migrate && django python3 seed.py 
+release: python manage.py migrate
 web: gunicorn api.wsgi
