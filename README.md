@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.com/lucianosz7/2019-2-ArBC-API/badges/develop/pipeline.svg)](https://gitlab.com/lucianosz7/2019-2-ArBC-API/commits/develop)
+
 # ArBC-API
 
 ## Construir o projeto
