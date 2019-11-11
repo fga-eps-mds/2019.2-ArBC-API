@@ -11,16 +11,13 @@ django.setup()
 
 def load_image(char):
 
-    content_file = ContentFile(open('seeds/' + char + '.gif', 'rb').read())
     file_name = char
-    image_file = InMemoryUploadedFile(content_file, None,
+    content_file = ContentFile(open('seeds_letters/' + file_name + '.gif', 'rb').read())
+    return InMemoryUploadedFile(content_file, None,
                                       file_name + '.gif', 'image/gif',
                                       content_file.tell, None)
 
-    return image_file
-
-
-def creat_Letter(N):
+def create_letter(N):
     letter = app.models.Letter()
     letter.name = N
     image = load_image(N)
@@ -29,4 +26,4 @@ def creat_Letter(N):
 
 
 for i in string.ascii_uppercase:
-    creat_Letter(i)
+    creat_letter(i)
