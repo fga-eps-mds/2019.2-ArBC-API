@@ -25,8 +25,9 @@ class Letter(models.Model):
     def str(self):
         return "{}".format(self.name)
 
+
 class Pattern(models.Model):
-    
+
     # pattern title
     name = models.CharField(max_length=255, null=False)
     pattern = models.FileField(upload_to='pattern/')

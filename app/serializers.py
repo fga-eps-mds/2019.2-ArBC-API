@@ -25,6 +25,7 @@ class LetterSerializer(serializers.ModelSerializer):
         model = Letter
         fields = ("name", "image")
 
+
 class PatternSerializer(serializers.ModelSerializer):
     pattern = serializers.FileField(
         max_length=None, use_url=True
