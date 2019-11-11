@@ -1,8 +1,10 @@
 from rest_framework import generics
 from .models import Word
 from .models import Letter
+from .models import Pattern
 from .serializers import WordSerializer
 from .serializers import LetterSerializer
+from .serializers import PatternSerializer
 
 
 class ListCreateWordView(generics.ListCreateAPIView):
@@ -21,6 +23,14 @@ class ListCreateLetterView(generics.ListCreateAPIView):
     serializer_class = LetterSerializer
 
 
+class ListCreatePatternView(generics.ListCreateAPIView):
+    """
+    Provides a list create method handler.
+    """
+    queryset = Pattern.objects.all().order_by('id')
+    serializer_class = PatternSerializer
+
+
 class RetrieveUpdateDestroyWordView(generics.RetrieveUpdateDestroyAPIView):
     """
     Provides a retrieve update destroy method handler.
@@ -36,4 +46,13 @@ class RetrieveUpdateDestroyLetterView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
+    lookup_field = 'name'
+
+
+class RetrieveUpdateDestroyPatternView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Provides a retrieve update destroy method handler.
+    """
+    queryset = Pattern.objects.all()
+    serializer_class = PatternSerializer
     lookup_field = 'name'
