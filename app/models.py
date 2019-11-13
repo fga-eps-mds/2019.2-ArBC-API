@@ -48,7 +48,7 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
 
 
 @receiver(models.signals.post_delete, sender=Pattern)
-def auto_delete_file_on_delete(sender, instance, **kwargs):
+def auto_delete_pattern_on_delete(sender, instance, **kwargs):
     """
     Deletes file from filesystem
     when corresponding Word object is deleted.

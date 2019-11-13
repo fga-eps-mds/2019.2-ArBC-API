@@ -322,10 +322,12 @@ class UpdateSingleLetterTest(BaseLetterViewTest):
         serial = LetterSerializer(expected, many=True)
         self.assertEqual(serial.data[0]['name'], data['name'])
 
+
 class GetAllPatternsTest(APITestCase):
+
     @staticmethod
     def load_patts(patt_name):
-    
+
         file_name = 'pattern-' + patt_name
         content_file = ContentFile(open('seeds_patts/' +
                                         file_name + '.patt', 'rb').read())
@@ -333,27 +335,24 @@ class GetAllPatternsTest(APITestCase):
                                     file_name + '.patt', 'pattern/patt',
                                     content_file.tell, None)
 
-    
     @staticmethod
     def create_patt(self, letter):
-    
+
         patterns = Pattern()
         patterns.name = letter
         patts = self.load_patts(letter)
         patterns.pattern.save(patts.name, patts)
         patterns.save()
 
-
     def setUp(self):
+
         self.create_patt(self, 'A2')
         self.create_patt(self, 'R2')
         self.create_patt(self, 'B1')
         self.create_patt(self, 'C1')
 
-
     def tearDown(self):
         Pattern.objects.all().delete()
-
 
     def test_get_all_patterns(self):
         """
@@ -379,4 +378,3 @@ class GetAllPatternsTest(APITestCase):
             path = resp['pattern']
             path = path[17:len(path)]  # removing the localhost and http prefix
             self.assertEqual(path, serial['pattern'])
-    
