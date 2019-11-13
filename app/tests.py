@@ -8,8 +8,10 @@ from rest_framework.views import status
 from app.views import ListCreateLetterView, ListCreateWordView
 from .models import Word
 from .models import Letter
+from .models import Pattern
 from .serializers import WordSerializer
 from .serializers import LetterSerializer
+from .serializers import PatternSerializer
 from PIL import Image
 import random
 import string
@@ -319,3 +321,62 @@ class UpdateSingleLetterTest(BaseLetterViewTest):
         expected = Letter.objects.filter(name='frobenius')
         serial = LetterSerializer(expected, many=True)
         self.assertEqual(serial.data[0]['name'], data['name'])
+
+class GetAllPatternsTest(APITestCase):
+    @staticmethod
+    def load_patts(patt_name):
+    
+        file_name = 'pattern-' + patt_name
+        content_file = ContentFile(open('seeds_patts/' +
+                                        file_name + '.patt', 'rb').read())
+        return InMemoryUploadedFile(content_file, None,
+                                    file_name + '.patt', 'pattern/patt',
+                                    content_file.tell, None)
+
+    
+    @staticmethod
+    def create_patt(self, letter):
+    
+        patterns = Pattern()
+        patterns.name = letter
+        patts = self.load_patts(letter)
+        patterns.pattern.save(patts.name, patts)
+        patterns.save()
+
+
+    def setUp(self):
+        self.create_patt(self, 'A2')
+        self.create_patt(self, 'R2')
+        self.create_patt(self, 'B1')
+        self.create_patt(self, 'C1')
+
+
+    def tearDown(self):
+        Pattern.objects.all().delete()
+
+
+    def test_get_all_patterns(self):
+        """
+        This test ensures that all patterns added in the setUp method
+        exist when we make a GET request to the patterns endpoint
+        """
+        # hit the API endpoint
+        response = self.client.get(
+            reverse("pattern-all", kwargs={"version": "v1"})
+        )
+        # fetch the data from db
+        response_status = response.status_code
+        self.assertEqual(response_status, status.HTTP_200_OK)
+        response = response.data
+        expected = Pattern.objects.all()
+        serialized = PatternSerializer(expected, many=True)
+        serialized = serialized.data
+        response = response['results']
+        for i in range(len(serialized)):
+            resp = response[i]
+            serial = serialized[i]
+            self.assertEqual(resp['name'], serial['name'])
+            path = resp['pattern']
+            path = path[17:len(path)]  # removing the localhost and http prefix
+            self.assertEqual(path, serial['pattern'])
+    

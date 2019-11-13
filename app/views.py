@@ -23,7 +23,7 @@ class ListCreateLetterView(generics.ListCreateAPIView):
     serializer_class = LetterSerializer
 
 
-class ListCreatePatternView(generics.ListCreateAPIView):
+class ListPatternView(generics.ListAPIView):
     """
     Provides a list create method handler.
     """
@@ -46,13 +46,4 @@ class RetrieveUpdateDestroyLetterView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
-    lookup_field = 'name'
-
-
-class RetrieveUpdateDestroyPatternView(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Provides a retrieve update destroy method handler.
-    """
-    queryset = Pattern.objects.all()
-    serializer_class = PatternSerializer
     lookup_field = 'name'

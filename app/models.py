@@ -47,6 +47,16 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
         instance.image.delete(False)
 
 
+@receiver(models.signals.post_delete, sender=Pattern)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding Word object is deleted.
+    """
+    if instance.pattern:
+        instance.pattern.delete(False)
+
+
 @receiver(models.signals.pre_save, sender=Word)
 def auto_delete_word_image_on_change(sender, instance, **kwargs):
     """
