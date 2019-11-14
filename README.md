@@ -21,7 +21,7 @@ sudo docker-compose -f local.yml run --rm django python3 manage.py createsuperus
 
 ## Gerar seedings
 
-sudo docker-compose -f local.yml run --rm django python3 seed.py
+sudo docker-compose -f local.yml run --rm django python3 seeds.py
 
 ## Testar o linting
 
@@ -29,7 +29,7 @@ sudo docker-compose -f local.yml run --rm django flake8
 
 ## Verificar os testes unitários
 
-sudo docker-compose -f local.yml run --rm django py.test
+sudo docker-compose -f local.yml run --rm django python3 manage.py test
 
 ## Rodar o servidor
 

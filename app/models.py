@@ -17,9 +17,20 @@ class Word(models.Model):
 
 
 class Letter(models.Model):
+
     # gif title
     name = models.CharField(max_length=255, null=False)
     image = models.ImageField(upload_to='letter/')
+
+    def str(self):
+        return "{}".format(self.name)
+
+
+class Pattern(models.Model):
+
+    # pattern title
+    name = models.CharField(max_length=255, null=False)
+    pattern = models.FileField(upload_to='pattern/')
 
     def str(self):
         return "{}".format(self.name)
@@ -34,6 +45,16 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     """
     if instance.image:
         instance.image.delete(False)
+
+
+@receiver(models.signals.post_delete, sender=Pattern)
+def auto_delete_pattern_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding Word object is deleted.
+    """
+    if instance.pattern:
+        instance.pattern.delete(False)
 
 
 @receiver(models.signals.pre_save, sender=Word)
