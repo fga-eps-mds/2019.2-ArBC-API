@@ -1,9 +1,15 @@
 from rest_framework import generics
+from django.views.generic import FormView
+from .forms import S3DirectUploadForm
 from .models import Word
 from .models import Letter
 from .serializers import WordSerializer
 from .serializers import LetterSerializer
 
+
+class MyView(FormView):
+    template_name = 'form.html'
+    form_class = S3DirectUploadForm
 
 class ListCreateWordView(generics.ListCreateAPIView):
     """

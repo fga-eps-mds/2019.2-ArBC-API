@@ -12,7 +12,7 @@ class Word(models.Model):
     # gif title
     name = models.CharField(max_length=255, null=False)
     image = models.ImageField(upload_to='word/')
-    image_s3 = S3DirectField(dest='primary_destination', blank=True)
+    image_s3 = S3DirectField(dest='Letters', blank=True)
 
     def str(self):
         return "{}".format(self.name)
@@ -22,7 +22,7 @@ class Letter(models.Model):
     # gif title
     name = models.CharField(max_length=255, null=False)
     image = models.ImageField(upload_to='letter/')
-    image_s3 = S3DirectField(dest='primary_destination', blank=True)
+    image_s3 = S3DirectField(dest='Letters', blank=True)
 
     def str(self):
         return "{}".format(self.name)
