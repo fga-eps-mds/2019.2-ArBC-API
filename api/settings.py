@@ -22,11 +22,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$@v^om6-ul9wtqpi0#lgmtend)easyyr13-)5$&f(el-g8@=1*'
+AWS_ACCESS_KEY_ID = 'AKIAJ3W5FNK6O3ACG5XA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'arbc-dev'
+AWS_S3_REGION_NAME = 'América do Sul(São Paulo)'
+AWS_S3_ENDPOINT_URL = 'https://s3.amazonaws.com'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['128.0.0.1', '127.0.0.1', '.herokuapp.com']
+
+S3DIRECT_DESTINATIONS = {
+    'primary_destination': {
+        'key': 'uploads/',
+        'allowed': ['image/jpg', 'image/jpeg', 'image/png',
+                    'video/mp4', 'image/gif'],
+    },
+}
 
 # Application definition
 

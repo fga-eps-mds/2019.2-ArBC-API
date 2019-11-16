@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.dispatch import receiver
+from s3direct.fields import S3DirectField
 
 
 # Create your models here
@@ -11,6 +12,7 @@ class Word(models.Model):
     # gif title
     name = models.CharField(max_length=255, null=False)
     image = models.ImageField(upload_to='word/')
+    image_s3 = S3DirectField(dest='primary_destination', blank=True)
 
     def str(self):
         return "{}".format(self.name)
@@ -20,6 +22,7 @@ class Letter(models.Model):
     # gif title
     name = models.CharField(max_length=255, null=False)
     image = models.ImageField(upload_to='letter/')
+    image_s3 = S3DirectField(dest='primary_destination', blank=True)
 
     def str(self):
         return "{}".format(self.name)

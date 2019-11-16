@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    path('s3direct/', include('s3direct.urls')),
     path('admin/', admin.site.urls),
     re_path('api/(?P<version>(v1|v2))/', include('app.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

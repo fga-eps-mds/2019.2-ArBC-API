@@ -8,8 +8,7 @@ sudo docker-compose -f local.yml build
 
 ## Criar as migrações
 
-sudo docker-compose -f local.yml run --rm 
-django python3 manage.py makemigrations
+sudo docker-compose -f local.yml run --rm django python3 manage.py makemigrations
 
 ## Rodar as migrações
 
