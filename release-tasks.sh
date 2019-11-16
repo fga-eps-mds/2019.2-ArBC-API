@@ -2,6 +2,9 @@
 
 echo "Running Release Tasks"
 
+echo "Super User"
+./manage.py createsuperuser2 --username arbcAdmin --password Arbc2019 --noinput --email 'arbc.base@gmail.com'
+
 echo "Running Make Migrations"
 python3 manage.py makemigrations
 
