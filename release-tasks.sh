@@ -3,7 +3,7 @@
 echo "Running Release Tasks"
 
 echo "Super User"
-./manage.py createsuperuser2 --username arbcAdmin --password Arbc2019 --noinput --email 'arbc.base@gmail.com'
+python3 manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('arbcAdmin', 'arbc.base@gmail.com', 'Arbc2019')"
 
 echo "Running Make Migrations"
 python3 manage.py makemigrations
