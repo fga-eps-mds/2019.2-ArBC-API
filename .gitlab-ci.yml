@@ -24,15 +24,11 @@ test:
     #- pip install postgres
     - docker-compose -f local.yml build
     #- docker-compose -f local.yml up
-    #- docker-compose -f local.yml run --rm django python3 manage.py makemigrations
-    #- docker-compose -f local.yml run --rm django python3 manage.py migrate
     - rm ./app/migrations/*
     - docker-compose -f local.yml run --rm django flake8 #liting
-    - touch .env.json
-    - echo "{ " >> .env.json
-    - echo ""DATABASE_URL":" "$DATABASE_URL" "}" >> .env.json 
-    - cat .env.json
     - docker-compose -f local.yml run --rm django ./manage.py test #unit test
+    - docker-compose -f local.yml run --rm django python3 manage.py makemigrations
+    - docker-compose -f local.yml run --rm django python3 manage.py migrate
 
 build:
   stage: build
