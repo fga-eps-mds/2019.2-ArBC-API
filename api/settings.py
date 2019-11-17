@@ -44,6 +44,11 @@ S3DIRECT_DESTINATIONS = {
         'allowed': ['image/jpg', 'image/jpeg', 'image/png',
                     'video/mp4', 'image/gif'],
     },
+    'Words': {
+        'key': 'Letters/',
+        'allowed': ['image/jpg', 'image/jpeg', 'image/png',
+                    'video/mp4', 'image/gif'],
+    },
 }
 
 # Application definition

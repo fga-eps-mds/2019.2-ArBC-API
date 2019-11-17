@@ -28,7 +28,7 @@ sudo docker-compose -f local.yml run --rm django flake8
 
 ## Verificar os testes unitários
 
-sudo docker-compose -f local.yml run --rm django py.test
+sudo docker-compose -f local.yml run --rm django python3 manage.py test
 
 ## Rodar o servidor
 
