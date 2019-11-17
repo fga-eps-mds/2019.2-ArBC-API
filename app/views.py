@@ -11,6 +11,7 @@ class MyView(FormView):
     template_name = 'form.html'
     form_class = S3DirectUploadForm
 
+
 class ListCreateWordView(generics.ListCreateAPIView):
     """
     Provides a list method handler.
