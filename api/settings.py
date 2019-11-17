@@ -35,6 +35,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['128.0.0.1', '127.0.0.1', '.herokuapp.com']
 
+AWS_DEFAULT_ACL = None
+
 S3DIRECT_DESTINATIONS = {
     'Letters': {
         'key': 'Letters/',
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
     'app',
     'corsheaders',
     's3direct',
+    'storages',
 ]
 
 MIDDLEWARE = [
