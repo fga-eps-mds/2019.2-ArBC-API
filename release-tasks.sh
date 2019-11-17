@@ -2,9 +2,6 @@
 
 echo "Running Release Tasks"
 
-echo "Super User"
-python3 manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('arbcAdmin', 'arbc.base@gmail.com', 'Arbc2019')"
-
 #echo "Removing migrations" 
 #find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 #find . -path "*/migrations/*.pyc"  -delete
