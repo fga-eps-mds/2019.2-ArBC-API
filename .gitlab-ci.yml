@@ -30,7 +30,7 @@ test:
     - docker-compose -f local.yml run --rm django flake8 #liting
     - touch .env.json
     - echo "{ " >> .env.json
-    - echo ""DATABASE_URL":" + $DATABASE_URL + "}" >> .env.json 
+    - echo ""DATABASE_URL":" "$DATABASE_URL" "}" >> .env.json 
     - cat .env.json
     - docker-compose -f local.yml run --rm django ./manage.py test #unit test
 
