@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import dj_database_url
 import django_heroku
+from .env import credentials
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,14 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$@v^om6-ul9wtqpi0#lgmtend)easyyr13-)5$&f(el-g8@=1*'
+SECRET_KEY = credentials.get('SECRET_KEY')
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_ACCESS_KEY_ID = 'AKIAJ3W5FNK6O3ACG5XA'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'arbc-dev'
-AWS_S3_REGION_NAME = 'sa-east-1'
-AWS_S3_ENDPOINT_URL = 'https://s3-sa-east-1.amazonaws.com'
+DEFAULT_FILE_STORAGE = credentials.get('DEFAULT_FILE_STORAGE')
+AWS_ACCESS_KEY_ID = credentials.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = credentials.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = credentials.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = credentials.get('AWS_S3_REGION_NAME')
+AWS_S3_ENDPOINT_URL = credentials.get('AWS_S3_ENDPOINT_URL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
