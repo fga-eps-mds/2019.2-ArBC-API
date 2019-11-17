@@ -31,6 +31,7 @@ test:
     - touch .env.json
     - echo "{ " >> .env.json
     - echo ""DATABASE_URL":" + $DATABASE_URL + "}" >> .env.json 
+    - cat .env.json
     - docker-compose -f local.yml run --rm django ./manage.py test #unit test
 
 build:
