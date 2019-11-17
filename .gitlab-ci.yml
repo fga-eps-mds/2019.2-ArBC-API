@@ -29,6 +29,8 @@ test:
     - rm ./app/migrations/*
     - docker-compose -f local.yml run --rm django flake8 #liting
     - touch .env.json
+    - echo "{ " >> .env.json
+    - echo ""DATABASE_URL":" + $DATABASE_URL + "}" >> .env.json 
     - docker-compose -f local.yml run --rm django ./manage.py test #unit test
 
 build:
