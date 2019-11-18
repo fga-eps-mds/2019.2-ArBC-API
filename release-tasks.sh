@@ -9,8 +9,9 @@ echo "Running Release Tasks"
 echo "Running Make Migrations"
 python3 manage.py makemigrations
 
-echo "Running seed"
-python3 seed.py
+#Run only when you need to populate the database
+#echo "Running seed"
+#python3 seed.py
 
 echo "Running Migrations"
 python3 manage.py migrate
