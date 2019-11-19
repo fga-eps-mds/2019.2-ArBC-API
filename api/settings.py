@@ -141,8 +141,12 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100
 }
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:8080',
+    'https://arbc.netlify.com',
+    'https://arbc-dev.netlify.com',
 ]
 
 django_heroku.settings(locals())
