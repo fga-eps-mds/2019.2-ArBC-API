@@ -21,6 +21,7 @@ django-redis==4.9.0  # https://github.com/niwinz/django-redis
 django-s3direct>=1.0.4 #https://pypi.org/project/django-s3direct/
 boto3>=1.4.4 #https://pypi.org/project/boto3/
 django-storages>=1.7 #https://pypi.org/project/django-storages/
+coveralls>=1.1  #https://pypi.org/project/coveralls/
 
 # Django REST Framework
 djangorestframework==3.8.2  # https://github.com/encode/django-rest-framework

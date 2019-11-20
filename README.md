@@ -24,11 +24,15 @@ sudo docker-compose -f local.yml run --rm django python3 seed.py
 
 ## Testar o linting
 
-sudo docker-compose -f local.yml run --rm django flake8
+sudo docker-compose -f local.yml run --rm django flake8 --exclude=__init__.py
 
 ## Verificar os testes unitários
 
 sudo docker-compose -f local.yml run --rm django python3 manage.py test
+
+## Rodar cobertura de código
+
+sudo docker-compose -f local.yml run --rm django coverage run --source=app manage.py test
 
 ## Rodar o servidor
 
