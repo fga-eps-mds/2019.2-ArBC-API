@@ -26,8 +26,7 @@ test:
     #- docker-compose -f local.yml up
     - rm ./app/migrations/*
     - docker-compose -f local.yml run --rm django flake8 --exclude=__init__.py #liting
-    - export DATABASE_URL = $teste
-    - DATABASE_URL
+    - env DATABASE_URL=$teste
     #- docker-compose -f local.yml run --rm django ./manage.py test #unit test
     #- docker-compose -f local.yml run --rm django python3 manage.py makemigrations
     #- docker-compose -f local.yml run --rm django python3 manage.py migrate
