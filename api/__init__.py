@@ -6,9 +6,7 @@ from .env import credentials
 #test enviroments variables
 enviroments = 'prod'
 
-if credentials.get('enviroment') == 'prod':
-   print("Produção")
+""" if credentials.get('enviroment') == 'prod':
    from .prod import *
 if credentials.get('enviroment') == 'dev':
-   print("Desenvolvimento")
-   from .dev import *
+   from .dev import * """
