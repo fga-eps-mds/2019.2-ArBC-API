@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import dj_database_url
 import django_heroku
-from .env import credentials
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,13 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = credentials.get('SECRET_KEY')
-DEFAULT_FILE_STORAGE = credentials.get('DEFAULT_FILE_STORAGE')
-AWS_ACCESS_KEY_ID = credentials.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = credentials.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = credentials.get('AWS_STORAGE_BUCKET_NAME_PROD')
-AWS_S3_REGION_NAME = credentials.get('AWS_S3_REGION_NAME')
-AWS_S3_ENDPOINT_URL = credentials.get('AWS_S3_ENDPOINT_URL')
+SECRET_KEY = os.environ['SECRET_KEY']
+
+DEFAULT_FILE_STORAGE = os.environ['DEFAULT_FILE_STORAGE']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME_DEV']
+AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
+AWS_S3_ENDPOINT_URL = os.environ['AWS_S3_ENDPOINT_URL']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -169,9 +169,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:8080',
-    'https://arbc.netlify.com',
     'https://arbc-dev.netlify.com',
     'https://arbc-stg.netlify.com',
 ]
+
 
 django_heroku.settings(locals())

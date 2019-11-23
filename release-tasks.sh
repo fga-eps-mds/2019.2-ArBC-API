@@ -1,10 +1,6 @@
- 
 #!/bin/bash
 
 echo "Running Release Tasks"
-
-echo "Super User"
-python3 manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('arbcAdmin', 'arbc.base@gmail.com', 'Arbc2019')"
 
 #echo "Removing migrations" 
 #find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
@@ -13,13 +9,15 @@ python3 manage.py shell -c "from django.contrib.auth.models import User; User.ob
 echo "Running Make Migrations"
 python3 manage.py makemigrations
 
+#Run only when you need to populate the database
 #echo "Running seed"
 #python3 seed.py
 
 echo "Running Migrations"
 python3 manage.py migrate
 
-#echo "Running Fake Migrations"
-#python3 manage.py migrate --fake
+echo "Running Fake Migrations"
+python3 manage.py migrate --fake
+
 
 echo "Done"
