@@ -30,8 +30,6 @@ AWS_STORAGE_BUCKET_NAME = credentials.get('AWS_STORAGE_BUCKET_NAME_PROD')
 AWS_S3_REGION_NAME = credentials.get('AWS_S3_REGION_NAME')
 AWS_S3_ENDPOINT_URL = credentials.get('AWS_S3_ENDPOINT_URL')
 
-print("Secretkeyyyy: " + SECRET_KEY)
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
