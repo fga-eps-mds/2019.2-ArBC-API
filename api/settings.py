@@ -147,6 +147,7 @@ CORS_ORIGIN_WHITELIST = [
     'https://localhost:8080',
     'https://arbc.netlify.com',
     'https://arbc-dev.netlify.com',
+    'https://arbc-stg.netlify.com/',
 ]
 
 django_heroku.settings(locals())
