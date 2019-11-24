@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'corsheaders',
     's3direct',
     'storages',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -173,5 +174,16 @@ CORS_ORIGIN_WHITELIST = [
     'https://arbc-dev.netlify.com',
     'https://arbc-stg.netlify.com',
 ]
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--cover-erase',
+    '--cover-package=app,api',
+    '--cover-tests',
+    '--with-xcoverage',
+]
+
+
 
 django_heroku.settings(locals())
