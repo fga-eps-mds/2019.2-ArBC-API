@@ -21,6 +21,7 @@ test:
   script:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
+    - pip install codacy-coverage
     - docker-compose -f local.yml build
     - rm ./app/migrations/*
     - export CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
