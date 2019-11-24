@@ -26,7 +26,8 @@ test:
     - rm ./app/migrations/*
     - export CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
     - docker-compose -f local.yml run --rm django flake8 --exclude=__init__.py
-    - docker-compose -f local.yml run --rm django python3 ./manage.py test && python-codacy-coverage -r coverage.xml
+    - docker-compose -f local.yml run --rm django python3 ./manage.py test
+    - python-codacy-coverage -r coverage.xml
     - docker-compose -f local.yml run --rm django python3 manage.py makemigrations
     - docker-compose -f local.yml run --rm django python3 manage.py migrate
 
