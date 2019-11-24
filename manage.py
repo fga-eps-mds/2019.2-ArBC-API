@@ -16,11 +16,11 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-
     is_testing = 'test' in sys.argv
     if is_testing:
         import coverage
-        cov = coverage.coverage(source=['.'], omit=['*/migrations/*', '*/tests.py'])
+        cov = coverage.coverage(source=['.'],
+                                omit=['*/migrations/*', '*/tests.py'])
         cov.set_option('report:show_missing', True)
         cov.erase()
         cov.start()

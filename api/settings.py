@@ -185,5 +185,4 @@ NOSE_ARGS = [
 ]
 
 
-
 django_heroku.settings(locals())
