@@ -37,10 +37,12 @@ build:
 
 .release: 
   stage: deploy
+  script:
+    - pip install -r requirements.txt
   dependencies:
   - build
 
-.release_development:
+release_development:
   extends: .release
   environment: 
     name: development
@@ -48,7 +50,7 @@ build:
   only: 
     - update_pipeline
 
-.release_staging:
+release_staging:
   extends: .release
   environment: 
     name: staging
@@ -56,7 +58,7 @@ build:
   only: 
     - update_pipeline
     
-.release_production:
+release_production:
   extends: .release
   environment: 
     name: production
