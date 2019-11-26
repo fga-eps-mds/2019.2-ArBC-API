@@ -48,7 +48,7 @@ release_development:
     name: development
     url: https://arbc-dev.herokuapp.com/
   only: 
-    - update_pipeline
+    - develop
 
 release_staging:
   extends: .release
@@ -56,7 +56,7 @@ release_staging:
     name: staging
     url: https://arbc-stg.herokuapp.com/
   only: 
-    - update_pipeline
+    - develop
     
 release_production:
   extends: .release
@@ -64,5 +64,5 @@ release_production:
     name: production
     url: https://arbc-app.herokuapp.com/
   only:
-    - update_pipeline
+    - master
 
