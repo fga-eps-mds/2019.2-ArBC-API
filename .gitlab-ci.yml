@@ -40,7 +40,7 @@ build:
   dependencies:
   - build
 
-release_development:
+.release_development:
   extends: .release
   environment: 
     name: development
@@ -48,7 +48,7 @@ release_development:
   only: 
     - update_pipeline
 
-release_staging:
+.release_staging:
   extends: .release
   environment: 
     name: staging
@@ -56,7 +56,7 @@ release_staging:
   only: 
     - update_pipeline
     
-release_production:
+.release_production:
   extends: .release
   environment: 
     name: production
