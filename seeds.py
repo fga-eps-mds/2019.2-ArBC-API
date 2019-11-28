@@ -18,13 +18,13 @@ def load_image(name, folder):
                                 content_file.tell, None)
 
 
-def create_letter(N):
+""" def create_letter(N):
 
     letter = app.models.Letter()
     letter.name = N
     image = load_image(N, 'seeds_letters/')
     letter.image.save(image.name, image)
-    letter.save()
+    letter.save() """
 
 
 def create_word(name):
@@ -36,11 +36,11 @@ def create_word(name):
     word.save()
 
 
-for i in string.ascii_uppercase:
+""" for i in string.ascii_uppercase:
     create_letter(i)
 
 
-print('Letters have been successfully added')
+print('Letters have been successfully added') """
 
 
 for file_name in os.listdir('./seeds_words'):
