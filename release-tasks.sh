@@ -11,13 +11,13 @@ python3 manage.py makemigrations
 
 #Run only when you need to populate the database
 #echo "Running seed"
-#python3 seed.py
+#python3 seeds.py
 
 echo "Running Migrations"
 python3 manage.py migrate
 
-echo "Running Fake Migrations"
-python3 manage.py migrate --fake
+#echo "Running Fake Migrations"
+#python3 manage.py migrate --fake
 
 
 echo "Done"
