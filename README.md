@@ -1,5 +1,5 @@
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/fga-eps-mds/2019.2-ArBC-API.svg)](http://isitmaintained.com/project/fga-eps-mds/2019.2-ArBC-API "Average time to resolve an issue")[![Percentage of issues still open](http://isitmaintained.com/badge/open/fga-eps-mds/2019.2-ArBC-API.svg)](http://isitmaintained.com/project/fga-eps-mds/2019.2-ArBC-API "Percentage of issues still open")[![pipeline status](https://gitlab.com/lucianosz7/2019-2-ArBC-API/badges/master/pipeline.svg)](https://gitlab.com/lucianosz7/2019-2-ArBC-API/commits/master)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9d9050f6e7a8428190c5cc25e3b815ae)](https://www.codacy.com/manual/ArBC/2019.2-ArBC-API?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fga-eps-mds/2019.2-ArBC-API&amp;utm_campaign=Badge_Grade)[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/9d9050f6e7a8428190c5cc25e3b815ae)](https://www.codacy.com/manual/ArBC/2019.2-ArBC-API?utm_source=github.com&utm_medium=referral&utm_content=fga-eps-mds/2019.2-ArBC-API&utm_campaign=Badge_Coverage)
 
+[![pipeline status](https://gitlab.com/lucianosz7/2019-2-ArBC/badges/develop/pipeline.svg)](https://gitlab.com/lucianosz7/2019-2-ArBC/commits/develop) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9597bd729fa34472aa1a10de74557942)](https://www.codacy.com/manual/lucianosz7/2019.2-ArBC?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fga-eps-mds/2019.2-ArBC&amp;utm_campaign=Badge_Grade) [![Percentage of issues still open](http://isitmaintained.com/badge/open/fga-eps-mds/2019.2-ArBC.svg)](http://isitmaintained.com/project/fga-eps-mds/2019.2-ArBC "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/fga-eps-mds/2019.2-ArBC.svg)](http://isitmaintained.com/project/fga-eps-mds/2019.2-ArBC "Average time to resolve an issue") [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Coverage Status](https://coveralls.io/repos/github/fga-eps-mds/2019.2-ArBC/badge.svg?branch=Fix/%23code_coverage_command)](https://coveralls.io/github/fga-eps-mds/2019.2-ArBC?branch=Fix/%23code_coverage_command)
 
 ![](https://jlucassr.github.io/ArBC-Pages/imagens/logo.jpg)
 
@@ -20,46 +20,70 @@
 -  Reconhecimento de palavras utilizando estas mesmas letras.
 -  Visualização de imagens em cima da pattern ou palavra       reconhecida em tempo real.
 
+## Acessar o ArBC
 
-## Construir o projeto
+> Por qrcode
 
-sudo docker-compose -f local.yml build
+![](./app/images/qrcodeCamera-master.png)
 
-## Criar as migrações
+> Por link
+[ArBC](https://arbc.netlify.com/) 
 
-sudo docker-compose -f local.yml run --rm django python3 manage.py makemigrations
+## Clonar repositório 
 
-## Rodar as migrações
+```
+git clone https://github.com/fga-eps-mds/2019.2-ArBC/
+```
 
-sudo docker-compose -f local.yml run --rm django python3 manage.py migrate
+## Rodar ambiente 
 
-## Criar um super usuário
+```
+sudo docker-compose build
+sudo docker-compose up
+``` 
 
-sudo docker-compose -f local.yml run --rm django python3 manage.py createsuperuser
+## Como instalar
 
-## Gerar seedings
+```
+npm install
+```
 
-sudo docker-compose -f local.yml run --rm django python3 seeds.py
+### Compilar e rodar para desenvolvimento
 
-## Testar o linting
+```
+npm run serve
+```
 
-sudo docker-compose -f local.yml run --rm django flake8 --exclude=__init__.py
+### Compilar e rodar build
 
-## Verificar os testes unitários
+```
+npm run build
+```
 
-sudo docker-compose -f local.yml run --rm django python3 manage.py test
+### Rodar testes
 
-## Rodar cobertura de código
+```
+npm run test
+```
 
-sudo docker-compose -f local.yml run --rm django coverage run --source=app manage.py test
+### Lint e consertar arquivos
 
-## Rodar o servidor
+```
+npm run lint
+```
 
-sudo docker-compose -f local.yml up
+### Rodar testes end-2-end
 
-## Para acessar, abra no navegador em
+```
+npm run test:e2e
+```
 
-localhost:8000/api
+### Rodar testes unitários
+
+```
+npm run test:unit
+```
+
 # Membros
 
 ## Equipe de EPS
@@ -80,6 +104,7 @@ localhost:8000/api
 |<img src="https://i.ibb.co/mhCz5gb/rhuan.png" width="100" height="100"/>|Rhuan Carlos|rhuancarlos.queiroz@gmail.com|[@Rhuancpq](https://github.com/Rhuancpq)|
 |<img src="https://i.ibb.co/2P6p1Vx/sergio.png" width="100" height="100"/>|Sérgio Almeida|sergiosacj@hotmail.com.br|[@SergioAlmeidaCiprianoJr](https://github.com/SergioAlmeidaCiprianoJr)|
 |<img src="https://i.ibb.co/741s3JW/thiago.png" width="100" height="100"/>|Thiago Santos|thiago.lopes.santos.tls@gmail.com|[@thiagolopess](https://github.com/thiagolopess)|
+
 
 ## Licença
 ArBC é distribuído sob a licença GPL v3.0. Consulte nosso arquivo [LICENSE](https://github.com/fga-eps-mds/2019.2-ArBC/blob/da5b0706c50af1bbc65694b5e0bf8d5d97d0e03b/LICENSE) para saber mais.
