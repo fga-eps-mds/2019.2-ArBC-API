@@ -10,8 +10,8 @@ echo "Running Make Migrations"
 python3 manage.py makemigrations
 
 #Run only when you need to populate the database
-echo "Running seed"
-python3 seeds.py
+#echo "Running seed"
+#python3 seeds.py
 
 echo "Running Migrations"
 python3 manage.py migrate
