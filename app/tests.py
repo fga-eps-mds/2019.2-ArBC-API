@@ -133,7 +133,6 @@ class GetAllLettersTest(BaseLetterViewTest):
             serial = serialized[i]
             self.assertEqual(resp['name'], serial['name'])
             path = resp['image']
-            path = path[17:len(path)]  # removing the localhost and http prefix
             self.assertEqual(path, serial['image'])
 
 
@@ -160,7 +159,6 @@ class GetAllWordsTest(BaseWordViewTest):
             serial = serialized[i]
             self.assertEqual(resp['name'], serial['name'])
             path = resp['image']
-            path = path[17:len(path)]  # removing the localhost and http prefix
             self.assertEqual(path, serial['image'])
 
 
@@ -186,7 +184,6 @@ class GetSingleLetterTest(BaseLetterViewTest):
         response = response.data
         self.assertEqual(response['name'], serialized['name'])
         path = response['image']
-        path = path[17:len(path)]  # removing the localhost and http prefix
         self.assertEqual(path, serialized['image'])
         self.assertEqual(response_status, status.HTTP_200_OK)
 
@@ -213,7 +210,6 @@ class GetSingleWordTest(BaseWordViewTest):
         response = response.data
         self.assertEqual(response['name'], serialized['name'])
         path = response['image']
-        path = path[17:len(path)]  # removing the localhost and http prefix
         self.assertEqual(path, serialized['image'])
         self.assertEqual(response_status, status.HTTP_200_OK)
 

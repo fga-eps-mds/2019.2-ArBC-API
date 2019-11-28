@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
+import django_heroku
+from .env import credentials
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,12 +22,33 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$@v^om6-ul9wtqpi0#lgmtend)easyyr13-)5$&f(el-g8@=1*'
+SECRET_KEY = credentials.get('SECRET_KEY')
+DEFAULT_FILE_STORAGE = credentials.get('DEFAULT_FILE_STORAGE')
+AWS_ACCESS_KEY_ID = credentials.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = credentials.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = credentials.get('AWS_STORAGE_BUCKET_NAME_PROD')
+AWS_S3_REGION_NAME = credentials.get('AWS_S3_REGION_NAME')
+AWS_S3_ENDPOINT_URL = credentials.get('AWS_S3_ENDPOINT_URL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['128.0.0.1', '127.0.0.1', '.herokuapp.com']
+
+AWS_DEFAULT_ACL = None
+
+S3DIRECT_DESTINATIONS = {
+    'Letters': {
+        'key': 'Letters/',
+        'allowed': ['image/jpg', 'image/jpeg', 'image/png',
+                    'video/mp4', 'image/gif'],
+    },
+    'Words': {
+        'key': 'Letters/',
+        'allowed': ['image/jpg', 'image/jpeg', 'image/png',
+                    'video/mp4', 'image/gif'],
+    },
+}
 
 # Application definition
 
@@ -38,6 +62,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'app',
     'corsheaders',
+    's3direct',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +110,10 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
+DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -135,6 +165,13 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100
 }
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:8080',
+    'https://arbc.netlify.com',
+    'https://arbc-dev.netlify.com',
+    'https://arbc-stg.netlify.com',
 ]
+
+django_heroku.settings(locals())
